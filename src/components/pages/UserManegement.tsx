@@ -15,9 +15,9 @@ export const UserManegement: FC = memo(() => {
           <Spinner />
         </Center>
       ) : (
-        <Wrap p={{ base: 4, md: 10 }} >
+        <Wrap p={{ base: 4, md: 10 }} justify='center'>
           {users.map((user) => (
-            <WrapItem key={user.id} marginX="auto">
+            <WrapItem key={user.id}>
               <UserCard
                 imageUrl="https://source.unsplash.com/random"
                 userName={user.username}
