@@ -14,3 +14,5 @@ export default function App() {
     </ChakraProvider>
   );
 }
+//ChakraProviderで囲われたところにChakraUIを設定できる。
+//機能/ChakraProvider/BrowserRouter
