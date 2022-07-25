@@ -1,25 +1,33 @@
-import { Box, Image, Stack, Text, Wrap, WrapItem } from "@chakra-ui/react";
-import { memo, FC } from "react";
+import { Center, Spinner, Wrap, WrapItem } from "@chakra-ui/react";
+import { memo, FC, useEffect } from "react";
+import { useAllUsers } from "../../hooks/useAllUsers";
+import { UserCard } from "../organisms/user/UserCard";
 
 export const UserManegement: FC = memo(() => {
+  const { getUsers, loading, users } = useAllUsers();
+
+  useEffect(() => getUsers(), [getUsers]);
+
   return (
-    <Wrap p={{base:4,md:10}} >
-      <WrapItem>
-        <Box w="260px" h="260px" bg="white" borderRadius="10px" shadow="md"p={4} _hover={{opacity:0.8}} >
-          <Stack textAlign="center">
-            <Image
-              borderRadius="full"
-              boxSize="160px"
-              src="https://source.unsplash.com/random"
-              alt="プロフィール画像"
-              m='auto'
-            />
-            <Text fontSize='lg' fontWeight='bold' >aaaaa</Text>
-            <Text fontSize='sm' color='gray' >bbbbb</Text>
-          </Stack>
-        </Box>
-      </WrapItem>
-    </Wrap>
+    <>
+      {loading ? (
+        <Center h="100vh">
+          <Spinner />
+        </Center>
+      ) : (
+        <Wrap p={{ base: 4, md: 10 }} >
+          {users.map((user) => (
+            <WrapItem key={user.id} marginX="auto">
+              <UserCard
+                imageUrl="https://source.unsplash.com/random"
+                userName={user.username}
+                fullName={user.name}
+              />
+            </WrapItem>
+          ))}
+        </Wrap>
+      )}
+    </>
   );
 });
 //Wrap=等間隔にならべつつレスポンシブにも対応する/spacingを指定すれば間隔が操作できる
