@@ -23,3 +23,5 @@ export const useMessage = () => {
   );
   return { showMessage };
 };
+//useToast=渡した定数hogeにhoge({設定値})を入れることでmessageを表示できる
+//設定値の中身は一部propsを渡しており、特にstatusはor(|)で区切ることでこれらのうちのどれかしか選択できないようになっている。
