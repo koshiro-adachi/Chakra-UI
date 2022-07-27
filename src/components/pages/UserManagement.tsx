@@ -3,7 +3,7 @@ import { memo, FC, useEffect } from "react";
 import { useAllUsers } from "../../hooks/useAllUsers";
 import { UserCard } from "../organisms/user/UserCard";
 
-export const UserManegement: FC = memo(() => {
+export const UserManagement: FC = memo(() => {
   const { getUsers, loading, users } = useAllUsers();
 
   useEffect(() => getUsers(), [getUsers]);
@@ -15,7 +15,7 @@ export const UserManegement: FC = memo(() => {
           <Spinner />
         </Center>
       ) : (
-        <Wrap p={{ base: 4, md: 10 }} justify='center'>
+        <Wrap p={{ base: 4, md: 10 }} justify="center">
           {users.map((user) => (
             <WrapItem key={user.id}>
               <UserCard
@@ -32,3 +32,5 @@ export const UserManegement: FC = memo(() => {
 });
 //Wrap=等間隔にならべつつレスポンシブにも対応する/spacingを指定すれば間隔が操作できる
 //WrapItem=Wrapする要素一つ一つ
+//useEffect=初めに処理を一回だけ行った状態で画面を表示するのでデータの取得などに向いてる。
+//第2引数に入れた内容が更新されると更新されるが気を付けないと無限ループする。

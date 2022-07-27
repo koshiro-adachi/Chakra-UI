@@ -21,3 +21,4 @@ export type User={
       bs: string;
     }
 }
+//API=ソフトウェアやアプリケーションとプログラムをつなげるもの。今回はJSONplaceholderのデータとこのプログラムを繋げる。
