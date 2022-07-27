@@ -1,7 +1,7 @@
 import { Home } from "../components/pages/Home";
 import { Page404 } from "../components/pages/Page404";
 import { Setting } from "../components/pages/Setting";
-import { UserManegement } from "../components/pages/UserManagement";
+import { UserManagement } from "../components/pages/UserManagement";
 
 export const homeRoutes = [
   {
@@ -12,7 +12,7 @@ export const homeRoutes = [
   {
     path: "/user_management",
     exact: false,
-    children: <UserManegement />,
+    children: <UserManagement />,
   },
   {
     path: "/setting",
