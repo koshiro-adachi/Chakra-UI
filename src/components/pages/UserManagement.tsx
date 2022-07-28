@@ -8,6 +8,7 @@ import {
 } from "@chakra-ui/react";
 import { memo, FC, useEffect, useCallback } from "react";
 import { useAllUsers } from "../../hooks/useAllUsers";
+import { useLoginUser } from "../../hooks/useLoginUser";
 import { useSelectUser } from "../../hooks/useSelectUser";
 import { UserCard } from "../organisms/user/UserCard";
 import { UserDetailModal } from "../organisms/user/UserDetailModal";
@@ -16,6 +17,8 @@ export const UserManagement: FC = memo(() => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { getUsers, loading, users } = useAllUsers();
   const { onSelectUser, selectedUser } = useSelectUser();
+  const {loginUser}=useLoginUser();
+  console.log(loginUser);
 
   useEffect(() => getUsers(), []);
   //1行目で[]内が空白でもエラーが出ないようにしている。そのおかげで初回一回だけ関数を実行出来ている。
@@ -48,7 +51,7 @@ export const UserManagement: FC = memo(() => {
           ))}
         </Wrap>
       )}
-      <UserDetailModal user={selectedUser} isOpen={isOpen} onClose={onClose} />
+      <UserDetailModal user={selectedUser} isOpen={isOpen} isAdmin={loginUser?.isAdmin} onClose={onClose} />
     </>
   );
 });

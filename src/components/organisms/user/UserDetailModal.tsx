@@ -1,37 +1,79 @@
-import { FormControl, FormLabel, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Stack } from '@chakra-ui/react'
-import { FC, memo } from 'react'
-import { User } from '../../../types/api/user';
+import {
+  FormControl,
+  FormLabel,
+  Input,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Stack,
+} from "@chakra-ui/react";
+import { ChangeEvent, FC, memo, useEffect, useState } from "react";
+import { User } from "../../../types/api/user";
+import { PrimaryButton } from "../../atoms/button/PrimaryButton";
 
-type Props={
-    isOpen:boolean;
-    onClose:()=>void;
-    user:User|null;
-}
+type Props = {
+  isOpen: boolean;
+  onClose: () => void;
+  user: User | undefined;
+  isAdmin?: boolean;
+};
 
-export const UserDetailModal:FC<Props> = memo((props) => {
-    const {user,isOpen,onClose}=props;
+export const UserDetailModal: FC<Props> = memo((props) => {
+  const { user, isOpen, onClose, isAdmin = false } = props;
+  const onClickUpdate = () => {};
+  const [username, setUserName] = useState('');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+
+  useEffect(() => {
+    setUserName(user?.username ?? "");
+    setName(user?.name??'');
+    setEmail(user?.email??'');
+    setPhone(user?.phone??'');
+  }, [user]);//??=undefinedやnullの時に''を表示するように強制している
+
+  const onChangeUserName=(e:ChangeEvent<HTMLInputElement>)=>{setUserName(e.target.value)}
+  const onChangeName=(e:ChangeEvent<HTMLInputElement>)=>{setName(e.target.value)}
+  const onChangeEmail=(e:ChangeEvent<HTMLInputElement>)=>{setEmail(e.target.value)}
+  const onChangePhone=(e:ChangeEvent<HTMLInputElement>)=>{setPhone(e.target.value)}
+
   return (
-    <Modal isOpen={isOpen} onClose={onClose} autoFocus={false} motionPreset='slideInBottom' >
-    <ModalOverlay>
-      <ModalContent pb={6} >
-        <ModalHeader>ユーザー詳細</ModalHeader>
-        <ModalCloseButton/>
-        <ModalBody mx={4} >
-          <Stack spacing={4}>
-            <FormControl>
-              <FormLabel>名前</FormLabel>
-              <Input value={user?.username} isReadOnly />
-              <FormLabel>フルネーム</FormLabel>
-              <Input value={user?.name} isReadOnly />
-              <FormLabel>MAIL</FormLabel>
-              <Input value={user?.email} isReadOnly />
-              <FormLabel>TEL</FormLabel>
-              <Input value={user?.phone} isReadOnly />
-            </FormControl>
-          </Stack>
-        </ModalBody>
-      </ModalContent>
-    </ModalOverlay>
-  </Modal>
-  )
-})
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      autoFocus={false}
+      motionPreset="slideInBottom"
+    >
+      <ModalOverlay>
+        <ModalContent pb={2}>
+          <ModalHeader>ユーザー詳細</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody mx={4}>
+            <Stack spacing={4}>
+              <FormControl>
+                <FormLabel>名前</FormLabel>
+                <Input value={username} onChange={onChangeUserName} isReadOnly={!isAdmin} />
+                <FormLabel>フルネーム</FormLabel>
+                <Input value={name} onChange={onChangeName} isReadOnly={!isAdmin} />
+                <FormLabel>MAIL</FormLabel>
+                <Input value={email} onChange={onChangeEmail} isReadOnly={!isAdmin} />
+                <FormLabel>TEL</FormLabel>
+                <Input value={phone} onChange={onChangePhone} isReadOnly={!isAdmin} />
+              </FormControl>
+            </Stack>
+          </ModalBody>
+          {isAdmin && (
+            <ModalFooter>
+              <PrimaryButton onClick={onClickUpdate}>更新</PrimaryButton>
+            </ModalFooter>
+          )}
+        </ModalContent>
+      </ModalOverlay>
+    </Modal>
+  );
+});

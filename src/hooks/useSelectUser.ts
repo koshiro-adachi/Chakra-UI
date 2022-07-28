@@ -9,7 +9,7 @@ type Props = {
 
 //選択したユーザー情報を特定しモーダルを表示するカスタムフック
 export const useSelectUser = () => {
-  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const [selectedUser, setSelectedUser] = useState<User | undefined>(undefined);
   const onSelectUser = useCallback((props: Props) => {
     const { id, users, onOpen } = props;
     const targetUser = users.find((user) => user.id === id);
